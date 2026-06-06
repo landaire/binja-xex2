@@ -1,0 +1,24 @@
+version = 1
+revision = 3
+requires-python = "==3.10.*"
+
+[[package]]
+name = "binja-xex2"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "xex2" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "xex2", specifier = "==0.2.0" }]
+
+[[package]]
+name = "xex2"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b4/74/2b399877ca296407e45980f9e68f65848274a8532904cd8a087137912c84/xex2-0.2.0-cp310-cp310-macosx_11_0_universal2.whl", hash = "sha256:61ab0f1d00d907cde7fce8f168aaa1d5ec5c79d52f95f052207949ba94e03ba4", size = 1931928, upload-time = "2026-04-21T18:13:04.515Z" },
+    { url = "https://files.pythonhosted.org/packages/49/ec/4327a7c79898ed5eab964f4c480d77b96e573bc564d6234f66d30719b710/xex2-0.2.0-cp310-cp310-manylinux_2_28_x86_64.whl", hash = "sha256:ae50593700815d4c65b5da248b2b1247bbfb6ae7e81687eaa61ec086b883751d", size = 1031693, upload-time = "2026-04-21T18:13:06.376Z" },
+    { url = "https://files.pythonhosted.org/packages/e6/03/da4d025efb8ccd18649a98e4fac28e4732313c79dfd44d5f926e98454698/xex2-0.2.0-cp310-cp310-win_amd64.whl", hash = "sha256:152c2e8c80b52fe302e2ddc2b551390e2a3285bab194d0cd07a7ec1ffe6bb8c6", size = 277656, upload-time = "2026-04-21T18:13:07.837Z" },
+]

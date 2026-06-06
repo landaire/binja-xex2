@@ -1,0 +1,35 @@
+
+#pragma once
+
+// NTSTATUS is the enum directly so every NTSTATUS-typed field, function
+// return, and local auto-displays as the named status code. Width matches
+// the original `long` (4 bytes) by virtue of being an `int`-backed enum.
+typedef enum _NTSTATUS {
+    STATUS_SUCCESS                  = 0x00000000,
+
+    STATUS_BUFFER_OVERFLOW          = 0x80000005,
+    STATUS_NO_MORE_FILES            = 0x80000006,
+
+    STATUS_UNSUCCESSFUL             = 0xC0000001,
+    STATUS_NOT_IMPLEMENTED          = 0xC0000002,
+    STATUS_INFO_LENGTH_MISMATCH     = 0xC0000004,
+    STATUS_INVALID_PARAMETER        = 0xC000000D,
+    STATUS_NO_SUCH_DEVICE           = 0xC000000E,
+    STATUS_NO_SUCH_FILE             = 0xC000000F,
+    STATUS_INVALID_DEVICE_REQUEST   = 0xC0000010,
+    STATUS_END_OF_FILE              = 0xC0000011,
+    STATUS_ACCESS_DENIED            = 0xC0000022,
+    STATUS_BUFFER_TOO_SMALL         = 0xC0000023,
+    STATUS_OBJECT_NAME_INVALID      = 0xC0000033,
+    STATUS_OBJECT_NAME_NOT_FOUND    = 0xC0000034,
+    STATUS_OBJECT_NAME_COLLISION    = 0xC0000035,
+    STATUS_OBJECT_PATH_INVALID      = 0xC0000039,
+    STATUS_OBJECT_PATH_NOT_FOUND    = 0xC000003A,
+    STATUS_INSUFFICIENT_RESOURCES   = 0xC000009A,
+    STATUS_IO_TIMEOUT               = 0xC00000B5,
+    STATUS_FILE_IS_A_DIRECTORY      = 0xC00000BA,
+    STATUS_NOT_A_DIRECTORY          = 0xC0000103,
+    STATUS_FILE_CLOSED              = 0xC0000128,
+    STATUS_UNRECOGNIZED_VOLUME      = 0xC000014F,
+    STATUS_VOLUME_DISMOUNTED        = 0xC000026E,
+} NTSTATUS;
