@@ -2155,15 +2155,8 @@ class Xbox360Xex2View(BinaryView):
     long_name = "Xbox 360 XEX2"
 
     def __init__(self, data):
-        # BinaryView.__init__ (which seeds self._notifications and
-        # self.handle) runs LAST in this constructor, after the parse and
-        # basefile-patching below — any of which can raise. If it does,
-        # Binary Ninja garbage-collects the half-built view and
-        # BinaryView.__del__ -> _cleanup dereferences self._notifications /
-        # self.handle, raising AttributeError that *masks* the real
-        # exception (it surfaces only behind the "Details..." log link).
-        # Seed both up front so _cleanup is a safe no-op until the real
-        # BinaryView.__init__ overwrites them, letting the true error show.
+        # BinaryView.__init__ runs last here; seed these so a failure before
+        # it doesn't mask the real error in __del__/_cleanup.
         self._notifications = {}
         self.handle = None
 
