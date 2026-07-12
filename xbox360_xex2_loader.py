@@ -22,9 +22,13 @@ import sys
 # project venv's site-packages so we can `import xex2`. The project lives next
 # to this file (either directly or via a symlink in BN's plugins dir).
 _here = os.path.dirname(os.path.realpath(__file__))
-_venv_site = os.path.join(_here, ".venv", "lib", "python3.10", "site-packages")
-if os.path.isdir(_venv_site) and _venv_site not in sys.path:
-    sys.path.insert(0, _venv_site)
+# BN may run its bundled interpreter or (newer builds on Linux) the host's
+# Python, so don't pin the venv's site-packages to a single minor version —
+# glob whichever python3.* the local .venv was built for.
+import glob
+for _venv_site in glob.glob(os.path.join(_here, ".venv", "lib", "python3.*", "site-packages")):
+    if os.path.isdir(_venv_site) and _venv_site not in sys.path:
+        sys.path.insert(0, _venv_site)
 
 try:
     import xex2 as _xex2_mod
@@ -32,9 +36,15 @@ except ImportError:
     _xex2_mod = None
 
 try:
-    from xbox360_ordinal_exports import ORDINAL_EXPORTS_BY_MODULE
+    # Loaded as a package (repo dir in BN's plugins folder): sibling module
+    # is a relative import. Falls back to the absolute form when the two .py
+    # files are dropped directly into the plugins folder instead.
+    from .xbox360_ordinal_exports import ORDINAL_EXPORTS_BY_MODULE
 except ImportError:
-    ORDINAL_EXPORTS_BY_MODULE = {}
+    try:
+        from xbox360_ordinal_exports import ORDINAL_EXPORTS_BY_MODULE
+    except ImportError:
+        ORDINAL_EXPORTS_BY_MODULE = {}
 
 
 # ============================================================================
