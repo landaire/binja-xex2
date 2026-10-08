@@ -190,10 +190,12 @@ _xbox360_platform = None
 
 try:
     _arch = Architecture["ppc64"]
-    _cc = Xbox360CallingConvention(_arch, "xbox360")
-    _arch.register_calling_convention(_cc)
-
-    Xbox360PPC64Hook(_arch).register()
+    # Both loader packages share the Xbox 360 convention and architecture hook.
+    _cc = _arch.calling_conventions.get("xbox360")
+    if _cc is None:
+        _cc = Xbox360CallingConvention(_arch, "xbox360")
+        _arch.register_calling_convention(_cc)
+        Xbox360PPC64Hook(_arch).register()
     _arch.default_calling_convention = _cc
 
     # Platform() construction changed across BN versions. Try each known
@@ -2168,7 +2170,12 @@ class Xbox360Xex2View(BinaryView):
         # BinaryView.__init__ runs last here; seed these so a failure before
         # it doesn't mask the real error in __del__/_cleanup.
         self._notifications = {}
-        self.handle = None
+        self._handle = None
+        # BN 6 exposes a read-only property; older releases store a public
+        # handle attribute, which their cleanup code also needs on failure.
+        handle_descriptor = getattr(BinaryView, "handle", None)
+        if not isinstance(handle_descriptor, property) or handle_descriptor.fset is not None:
+            self.handle = None
 
         raw = bytes(data.read(0, data.length))
         if _xex2_mod is None:

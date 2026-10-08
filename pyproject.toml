@@ -2,5 +2,5 @@
 name = "binja-xex2"
 version = "0.1.0"
 description = "Binary Ninja loader for Xbox 360 XEX2 executables (and PowerPC PE images)."
-requires-python = "==3.10.*"
+requires-python = ">=3.10"
 dependencies = ["xex2==0.2.0"]
